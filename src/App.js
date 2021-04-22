@@ -112,7 +112,7 @@ function Table({ columns: userColumns, data, renderRowSubComponent }) {
     rows,
     prepareRow,
     visibleColumns,
-    state: { expanded }
+    // state: { expanded }
   } = useTable(
     {
       columns: userColumns,
@@ -124,9 +124,9 @@ function Table({ columns: userColumns, data, renderRowSubComponent }) {
 
   return (
     <>
-      <pre>
+      {/* <pre>
         <code>{JSON.stringify({ expanded: expanded }, null, 2)}</code>
-      </pre>
+      </pre> */}
       <table {...getTableProps()}>
         <thead>
           {headerGroups.map(headerGroup => (
