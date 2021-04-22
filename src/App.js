@@ -1,15 +1,15 @@
-import React from 'react';
-import styled from 'styled-components';
-import { useExpanded, useTable } from 'react-table';
+import React from 'react'
+import styled from 'styled-components'
+import { useExpanded, useTable } from 'react-table'
 
-import makeData from './makeData';
+import makeData from './makeData'
 
 const Styles = styled.div`
   padding: 1rem;
 
   table {
     border-spacing: 0;
-    border: 1px solid black;
+
 
     tr {
       :last-child {
@@ -23,27 +23,25 @@ const Styles = styled.div`
     td {
       margin: 0;
       padding: 0.5rem;
-      border-bottom: 1px solid black;
-      border-right: 1px solid black;
 
       :last-child {
         border-right: 0;
       }
     }
   }
-`;
+`
 
 // This could be inlined into SubRowAsync, this this lets you reuse it across tables
 function SubRows({ row, rowProps, visibleColumns, data, loading }) {
   if (loading) {
     return (
       <tr>
-        <td/>
+        <td />
         <td colSpan={visibleColumns.length - 1}>
           Loading...
         </td>
       </tr>
-    );
+    )
   }
 
   // error handling here :)
@@ -68,29 +66,29 @@ function SubRows({ row, rowProps, visibleColumns, data, loading }) {
                     row: { ...row, original: x }
                   })}
                 </td>
-              );
+              )
             })}
           </tr>
-        );
+        )
       })}
     </>
-  );
+  )
 }
 
 function SubRowAsync({ row, rowProps, visibleColumns }) {
-  const [loading, setLoading] = React.useState(true);
-  const [data, setData] = React.useState([]);
+  const [loading, setLoading] = React.useState(true)
+  const [data, setData] = React.useState([])
 
   React.useEffect(() => {
     const timer = setTimeout(() => {
-      setData(makeData(3));
-      setLoading(false);
-    }, 500);
+      setData(makeData(3))
+      setLoading(false)
+    }, 500)
 
     return () => {
-      clearTimeout(timer);
-    };
-  }, []);
+      clearTimeout(timer)
+    }
+  }, [])
 
   return (
     <SubRows
@@ -100,7 +98,7 @@ function SubRowAsync({ row, rowProps, visibleColumns }) {
       data={data}
       loading={loading}
     />
-  );
+  )
 }
 
 // A simple way to support a renderRowSubComponent is to make a render prop
@@ -122,7 +120,7 @@ function Table({ columns: userColumns, data, renderRowSubComponent }) {
     },
     useExpanded // We can useExpanded to track the expanded state
     // for sub components too!
-  );
+  )
 
   return (
     <>
@@ -131,40 +129,40 @@ function Table({ columns: userColumns, data, renderRowSubComponent }) {
       </pre>
       <table {...getTableProps()}>
         <thead>
-        {headerGroups.map(headerGroup => (
-          <tr {...headerGroup.getHeaderGroupProps()}>
-            {headerGroup.headers.map(column => (
-              <th {...column.getHeaderProps()}>{column.render('Header')}</th>
-            ))}
-          </tr>
-        ))}
+          {headerGroups.map(headerGroup => (
+            <tr {...headerGroup.getHeaderGroupProps()}>
+              {headerGroup.headers.map(column => (
+                <th {...column.getHeaderProps()}>{column.render('Header')}</th>
+              ))}
+            </tr>
+          ))}
         </thead>
         <tbody {...getTableBodyProps()}>
-        {rows.map((row, i) => {
-          prepareRow(row);
-          const rowProps = row.getRowProps();
-          return (
-            // Use a React.Fragment here so the table markup is still valid
-            <React.Fragment key={rowProps.key}>
-              <tr {...rowProps}>
-                {row.cells.map(cell => {
-                  return (
-                    <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
-                  );
-                })}
-              </tr>
-              {/* We could pass anything into this */}
-              {row.isExpanded &&
-                renderRowSubComponent({ row, rowProps, visibleColumns })}
-            </React.Fragment>
-          );
-        })}
+          {rows.map((row, i) => {
+            prepareRow(row)
+            const rowProps = row.getRowProps()
+            return (
+              // Use a React.Fragment here so the table markup is still valid
+              <React.Fragment key={rowProps.key}>
+                <tr {...rowProps}>
+                  {row.cells.map(cell => {
+                    return (
+                      <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
+                    )
+                  })}
+                </tr>
+                {/* We could pass anything into this */}
+                {row.isExpanded &&
+                  renderRowSubComponent({ row, rowProps, visibleColumns })}
+              </React.Fragment>
+            )
+          })}
         </tbody>
       </table>
-      <br/>
+      <br />
       <div>Showing the first 20 results of {rows.length} rows</div>
     </>
-  );
+  )
 }
 
 function App() {
@@ -226,9 +224,9 @@ function App() {
       }
     ],
     []
-  );
+  )
 
-  const data = React.useMemo(() => makeData(10), []);
+  const data = React.useMemo(() => makeData(10), [])
 
   // Create a function that will render our row sub components
   const renderRowSubComponent = React.useCallback(
@@ -240,7 +238,7 @@ function App() {
       />
     ),
     []
-  );
+  )
 
   return (
     <Styles>
@@ -254,7 +252,7 @@ function App() {
         renderRowSubComponent={renderRowSubComponent}
       />
     </Styles>
-  );
+  )
 }
 
-export default App;
+export default App
